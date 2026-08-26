@@ -29,15 +29,15 @@ Run the analyzer engine against any single module code asset or an entire source
 
 ```bash
 # Evaluate a single source block
-python bug_hunter.py target_code.c
+python script.py target_code.c
 
 # Recursively analyze an entire multi-file project folder architecture
-python bug_hunter.py path/to/c_source_directory/
+python script.py path/to/c_source_directory/
 ```
 
 ### Output Artefacts
 * `report.md`: Structured markdown metrics table, perfectly mapped for integration with Github pipelines.
-* `report.html`: An interactive, **Dark Academia-themed visual safety dashboard** logging critical boundary flaws.
+* `report.html`: An interactive, **visual safety dashboard** logging critical boundary flaws.
 
 ---
 
