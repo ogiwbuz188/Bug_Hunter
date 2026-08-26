@@ -1,14 +1,1 @@
-# 5. Run your script against any test C files present in your repositor      
-- name: "Run Python Bug Hunter Engine"
-    run: |
-        echo "Searching for C files and running analysis..."
-        # Touch files ahead of time so they exist in the root directory
-        touch report.md
-        touch report.html
-       
-        # Scan files and explicitly save outputs to the correct workspace folder
-        find . -name "*.c" -type f | while read -r c_file; do
-          echo "Scanning target: $c_file"
-          python bug_hunter.py "$c_file" --md ./report.md --html ./report.html
-        done
 
