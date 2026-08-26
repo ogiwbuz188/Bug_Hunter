@@ -1,1 +1,38 @@
+name: Generate Reports
 
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Allows you to run this manually from the Actions tab
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write # Gives the script permission to commit files back
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Run Script to Create Files
+        run: |
+          # The script generating the HTML file
+          echo "<html><body><h1>My GitHub Report</h1><p>Generated on $(date)</p></body></html>" > report.html
+          
+          # The script generating the Markdown file
+          echo "# My GitHub Report" > report.md
+          echo "Generated on $(date)" >> report.md
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@://github.com"
+          
+          git add report.html report.md
+          
+          # Only commit if changes exist to avoid workflow errors
+          git diff-index --quiet HEAD || git commit -m "Automated report update"
+          git push
