@@ -1,0 +1,42 @@
+name: Run C C++ Static Analyzer
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          # pip install -r requirements.txt
+
+      - name: Run static analyzer
+        run: |
+          # Generates your Markdown report
+          python my_analyzer.py --input src/ --format markdown --output report.md
+          
+          # Generates your HTML report, named explicitly as html.md
+          python my_analyzer.py --input src/ --format html --output html.md
+
+      - name: Upload html.md as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: html-report
+          path: html.md
+
+      - name: Publish report.md to GitHub Job Summary
+        run: |
+          cat report.md >> $GITHUB_STEP_SUMMARY
